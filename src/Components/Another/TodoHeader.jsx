@@ -14,11 +14,11 @@ export default function TodoHeader() {
   return (
     <StyledHeader>
       <FaSun />
-      <StyledFilterContainer>
-        <span>all</span>
-        <span>active</span>
-        <span>completed</span>
-      </StyledFilterContainer>
+      <div>
+        <button>all</button>
+        <button>active</button>
+        <button>completed</button>
+      </div>
     </StyledHeader>
   );
 }

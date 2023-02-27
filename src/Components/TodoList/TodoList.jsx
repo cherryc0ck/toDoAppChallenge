@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 import { useImmer } from 'use-immer';
 import AddTodo from '../AddTodo/AddTodo';
+import TodoItem from '../TodoItem/TodoItem';
 
 export default function TodoList() {
   const [inputText, setInputText] = useState("");
-  const [toDos, setToDos] = useState([
+  const [todos, setTodos] = useState([
     {
       id: '1',
       text: "장보기",
@@ -18,17 +19,28 @@ export default function TodoList() {
     }
   ]);
 
-  const handleAdd = todo => {
-    setToDos([...toDos, todo]);
+  const handleAdd = added => {
+    setTodos([...todos, added]);
+  };
+
+  const handleDelete = deleted => {
+    setTodos(todos.filter(todo => todo.id !== deleted.id));
+  };
+  
+  const handleUpdate = updated => {
+    setTodos(todos.map(todo => todo.id === updated.id ? updated : todo))
   };
 
   return (
     <section>
       <ul>
-        {toDos.map(toDo => (
-          <li key={toDo.id}>
-            <span>{toDo.text}</span>
-          </li>
+        {todos.map(todo => (
+          <TodoItem 
+            key={todo.id} 
+            todo={todo}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+          />
         ))}
       </ul>
       <AddTodo onAdd={handleAdd} />
