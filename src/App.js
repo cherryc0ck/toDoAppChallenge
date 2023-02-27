@@ -1,11 +1,13 @@
 import './App.css';
-import ToDoHeader from './Components/ToDo/ToDoHeader';
+import ToDoHeader from './components/Another/TodoHeader';
 import styled from 'styled-components';
+import ToDoList from './components/TodoList/TodoList';
 
 function App() {
   return (
     <StyledContainer>
       <ToDoHeader />
+      <ToDoList />
     </StyledContainer>
   );
 }
