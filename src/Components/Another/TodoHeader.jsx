@@ -1,24 +1,20 @@
 import React from 'react';
 
 import { FaSun } from 'react-icons/fa';
-import { useImmer } from 'use-immer';
 import styled from 'styled-components';
 
-export default function TodoHeader() {
-  const [filter, setFilter] = useImmer({
-    all: "",
-    active: "",
-    completed: ""
-  });
-
+export default function TodoHeader({ filters, filter, onFilterChange }) {
+  
   return (
     <StyledHeader>
       <FaSun />
-      <div>
-        <button>all</button>
-        <button>active</button>
-        <button>completed</button>
-      </div>
+      <ul>
+        {filters.map((item, idx) => (
+          <li key={idx}>
+            <button onClick={() => onFilterChange(item)}>{item}</button>
+          </li>
+        ))}
+      </ul>
     </StyledHeader>
   );
 }

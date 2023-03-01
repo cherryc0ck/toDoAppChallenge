@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
-import { useImmer } from 'use-immer';
 import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
 
-export default function TodoList() {
-  const [inputText, setInputText] = useState("");
+export default function TodoList({ filter }) {
   const [todos, setTodos] = useState([
     {
       id: '1',
@@ -31,10 +29,12 @@ export default function TodoList() {
     setTodos(todos.map(todo => todo.id === updated.id ? updated : todo))
   };
 
+  const filtered = getFilteredItems(todos, filter);
+
   return (
     <section>
       <ul>
-        {todos.map(todo => (
+        {filtered.map(todo => (
           <TodoItem 
             key={todo.id} 
             todo={todo}
@@ -47,4 +47,9 @@ export default function TodoList() {
     </section>
   );
 }
+
+const getFilteredItems = (todos, filter) => {
+  if (filter === 'all') return todos;
+  else return todos.filter(todo => todo.status === filter);
+};
 

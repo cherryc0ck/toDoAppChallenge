@@ -2,12 +2,16 @@ import './App.css';
 import ToDoHeader from './components/Another/TodoHeader';
 import styled from 'styled-components';
 import ToDoList from './components/TodoList/TodoList';
+import { useState } from 'react';
 
 function App() {
+  const filters = ['all', 'active', 'completed'];
+  const [filter, setFilter] = useState(filters[0]);
+
   return (
     <StyledContainer>
-      <ToDoHeader />
-      <ToDoList />
+      <ToDoHeader filters={filters} filter={filter} onFilterChange={setFilter} />
+      <ToDoList filter={filter} />
     </StyledContainer>
   );
 }
