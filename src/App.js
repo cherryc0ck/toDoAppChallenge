@@ -3,16 +3,19 @@ import ToDoHeader from './components/Another/TodoHeader';
 import styled from 'styled-components';
 import ToDoList from './components/TodoList/TodoList';
 import { useState } from 'react';
+import { DarkModeProvider } from './context/DarkModeContext';
 
 function App() {
   const filters = ['all', 'active', 'completed'];
   const [filter, setFilter] = useState(filters[0]);
 
   return (
-    <StyledContainer>
-      <ToDoHeader filters={filters} filter={filter} onFilterChange={setFilter} />
-      <ToDoList filter={filter} />
-    </StyledContainer>
+    <DarkModeProvider>
+      <StyledContainer>
+        <ToDoHeader filters={filters} filter={filter} onFilterChange={setFilter} />
+        <ToDoList filter={filter} />
+      </StyledContainer>
+    </DarkModeProvider>
   );
 }
 
