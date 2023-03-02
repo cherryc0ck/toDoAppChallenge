@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
 
 export default function TodoList({ filter }) {
-  const [todos, setTodos] = useState([
-    {
-      id: '1',
-      text: "장보기",
-      status: 'active'
-    },
-    {
-      id: '2',
-      text: "공부하기",
-      status: 'active'
-    }
-  ]);
+  const [todos, setTodos] = useState(readTodos);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const handleAdd = added => {
     setTodos([...todos, added]);
@@ -27,11 +20,6 @@ export default function TodoList({ filter }) {
   
   const handleUpdate = updated => {
     setTodos(todos.map(todo => todo.id === updated.id ? updated : todo))
-  };
-
-  const getFilteredItems = (todos, filter) => {
-    if (filter === 'all') return todos;
-    else return todos.filter(todo => todo.status === filter);
   };
 
   const filtered = getFilteredItems(todos, filter);
@@ -52,6 +40,17 @@ export default function TodoList({ filter }) {
     </StyledContainer>
   );
 }
+
+const readTodos = () => {
+  console.log('todos');
+  const todos = localStorage.getItem('todos');
+  return todos ? JSON.parse(todos) : [];
+};
+
+const getFilteredItems = (todos, filter) => {
+  if (filter === 'all') return todos;
+  else return todos.filter(todo => todo.status === filter);
+};
 
 const StyledContainer = styled.section`
   height: 100%;
